@@ -14,13 +14,8 @@ See ``docs/TNEENWH-SDK.md`` in the repo for full documentation.
 """
 
 from .api import (
-    admin_sessions,
-    admin_users,
-    assistant_chat,
-    assistant_status,
     channel_secrets,
     create_group,
-    docs_routes,
     download_inbound_media,
     generate_otp,
     get_channel_secret,
@@ -46,7 +41,6 @@ from .api import (
     login,
     logout,
     me,
-    openapi_spec,
     profile,
     refresh_session_qr,
     request_signup_otp,
@@ -94,7 +88,7 @@ from .exceptions import (
     is_feature_not_supported,
 )
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 __all__ = [
     "Channel",
@@ -104,14 +98,9 @@ __all__ = [
     "format_otp_notification_message",
     "is_api_error",
     "is_feature_not_supported",
-    "admin_sessions",
-    "admin_users",
-    "assistant_chat",
-    "assistant_status",
     "channel_secrets",
     "configure",
     "create_group",
-    "docs_routes",
     "download_inbound_media",
     "generate_otp",
     "get_channel_secret",
@@ -138,7 +127,6 @@ __all__ = [
     "login",
     "logout",
     "me",
-    "openapi_spec",
     "profile",
     "refresh_session_qr",
     "request_signup_otp",

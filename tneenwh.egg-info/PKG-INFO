@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: tneenwh
-Version: 0.1.1
+Version: 0.1.2
 Summary: Python client for the TNEENWH WhatsApp HTTP API — auth, OTP signup, sessions, messaging.
 Author: TNEENWH
 License: MIT
@@ -16,7 +16,7 @@ Description-Content-Type: text/markdown
 
 # tneenwh (Python)
 
-Python client for the **[TNEENWH](https://pypi.org/project/tneenwh/)** WhatsApp HTTP API — authentication, OTP signup, sessions, outbound messaging, webhooks, media, groups (when the server exposes them), and admin helpers.
+Python client for the **[TNEENWH](https://pypi.org/project/tneenwh/)** WhatsApp HTTP API — authentication, OTP signup, sessions, outbound messaging, webhooks, and groups (when the server exposes them).
 
 - **PyPI:** [`pip install tneenwh`](https://pypi.org/project/tneenwh/) — package page: https://pypi.org/project/tneenwh/
 - **Requirements:** Python 3.9+
@@ -34,15 +34,14 @@ The HTTP contract is defined by **`openapi.json`** on the API host (e.g. `GET ht
 4. [Configuration API](#configuration-api)
 5. [Health & authentication](#health--authentication)
 6. [Account & credentials](#account--credentials)
-7. [Assistant (dashboard AI)](#assistant-dashboard-ai)
-8. [Sessions (panel JWT)](#sessions-panel-jwt)
-9. [Messaging (default session)](#messaging-default-session)
-10. [Channel object (`session(...)`)](#channel-object-session)
-11. [Sub-API (`x-api-key`)](#sub-api-x-api-key)
-12. [Groups](#groups)
-13. [OTP helper (no HTTP)](#otp-helper-no-http)
-14. [Not available on stock HTTP mapping](#not-available-on-stock-http-mapping)
-15. [Errors](#errors)
+7. [Sessions (panel JWT)](#sessions-panel-jwt)
+8. [Messaging (default session)](#messaging-default-session)
+9. [Channel object (`session(...)`)](#channel-object-session)
+10. [Sub-API (`x-api-key`)](#sub-api-x-api-key)
+11. [Groups](#groups)
+12. [OTP helper (no HTTP)](#otp-helper-no-http)
+13. [Not available on stock HTTP mapping](#not-available-on-stock-http-mapping)
+14. [Errors](#errors)
 
 ---
 
@@ -142,21 +141,6 @@ tneenwh.me()
 tneenwh.profile()
 tneenwh.channel_secrets()
 tneenwh.rotate_swagger_portal()
-```
-
----
-
-## Assistant (dashboard AI)
-
-Server must configure **`OPENROUTER_API_KEY`** (or equivalent) for chat to work.
-
-```python
-tneenwh.configure(base_url="https://api.tneenwh.com")
-# tneenwh.login(...)  # panel JWT required
-
-tneenwh.assistant_status()
-tneenwh.assistant_chat(message="How do I send media?")
-tneenwh.assistant_chat(message="Hello", history=[{"role": "user", "content": "…"}], attachments=[...])
 ```
 
 ---
@@ -335,21 +319,6 @@ Build the OTP **message text** for `send_text` (not the signup HTTP OTP):
 from tneenwh import format_otp_notification_message, OtpNotificationParams
 
 text = format_otp_notification_message(OtpNotificationParams(code="123456", brand="MyApp"))
-```
-
----
-
-## Docs & admin
-
-```python
-tneenwh.configure(base_url="https://api.tneenwh.com")
-# tneenwh.login(...)  # JWT required where route requires auth
-
-tneenwh.openapi_spec()
-tneenwh.docs_routes()
-
-tneenwh.admin_users()    # admin JWT
-tneenwh.admin_sessions()
 ```
 
 ---

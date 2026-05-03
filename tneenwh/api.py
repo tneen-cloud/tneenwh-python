@@ -99,28 +99,6 @@ def rotate_swagger_portal() -> dict:
     return request_json("POST", "/me/credentials/swagger-portal/rotate", body={}, auth_bearer=True)
 
 
-def assistant_status() -> dict:
-    """Whether the in-dashboard assistant is configured on the server."""
-    return request_json("GET", "/me/assistant/status", auth_bearer=True)
-
-
-def assistant_chat(
-    *,
-    message: Optional[str] = None,
-    history: Optional[List[Dict[str, str]]] = None,
-    attachments: Optional[List[Dict[str, Any]]] = None,
-) -> dict:
-    """Proxy chat to OpenRouter (server must set OPENROUTER_API_KEY)."""
-    body: Dict[str, Any] = {}
-    if message is not None:
-        body["message"] = message
-    if history is not None:
-        body["history"] = history
-    if attachments is not None:
-        body["attachments"] = attachments
-    return request_json("POST", "/me/assistant/chat", body=body, auth_bearer=True)
-
-
 def sessions_list() -> dict:
     return request_json("GET", "/me/sessions", auth_bearer=True)
 
@@ -171,26 +149,6 @@ def rotate_channel_secret(session_id: str, channel_secret: str) -> dict:
         auth_bearer=True,
         channel_secret=channel_secret,
     )
-
-
-def openapi_spec() -> dict:
-    """GET /openapi.json (requires JWT if your server protects it)."""
-    return request_json("GET", "/openapi.json", auth_bearer=True)
-
-
-def docs_routes() -> dict:
-    """GET /docs.json — route hints (no auth on stock server)."""
-    return request_json("GET", "/docs.json", auth_bearer=False)
-
-
-def admin_users() -> dict:
-    """GET /admin/users — requires admin JWT."""
-    return request_json("GET", "/admin/users", auth_bearer=True)
-
-
-def admin_sessions() -> dict:
-    """GET /admin/sessions — requires admin JWT."""
-    return request_json("GET", "/admin/sessions", auth_bearer=True)
 
 
 def v1_sessions_list() -> dict:
