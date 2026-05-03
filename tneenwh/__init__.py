@@ -49,9 +49,11 @@ from .api import (
     send_list_message,
     send_media,
     send_message,
+    send_chat_state,
     send_text,
     session,
     session_calls,
+    session_chat_state,
     session_create,
     session_delete,
     session_details,
@@ -67,6 +69,7 @@ from .api import (
     signup_send_otp,
     signup_verify,
     v1_send_message,
+    v1_send_chat_state,
     v1_sessions_list,
     verify_otp,
 )
@@ -88,7 +91,7 @@ from .exceptions import (
     is_feature_not_supported,
 )
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 __all__ = [
     "Channel",
@@ -135,9 +138,11 @@ __all__ = [
     "send_list_message",
     "send_media",
     "send_message",
+    "send_chat_state",
     "send_text",
     "session",
     "session_calls",
+    "session_chat_state",
     "session_create",
     "session_delete",
     "session_details",
@@ -158,6 +163,7 @@ __all__ = [
     "signup_send_otp",
     "signup_verify",
     "v1_send_message",
+    "v1_send_chat_state",
     "v1_sessions_list",
     "verify_otp",
 ]

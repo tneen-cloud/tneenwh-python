@@ -269,6 +269,18 @@ class Channel:
             channel_secret=self.channel_secret,
         )
 
+    def send_chat_state(self, to: str, state: str) -> dict:
+        """Typing / recording indicators or clear (`POST …/chat-state`)."""
+        if state not in ("typing", "recording", "stop"):
+            raise ValueError("state must be 'typing', 'recording', or 'stop'")
+        return request_json(
+            "POST",
+            self._path("/chat-state"),
+            body={"to": to, "state": state},
+            auth_bearer=True,
+            channel_secret=self.channel_secret,
+        )
+
     def send_text(self, to: str, text: str) -> dict:
         return self.send_message({"to": to, "message": text})
 

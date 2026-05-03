@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: tneenwh
-Version: 0.1.2
+Version: 0.1.3
 Summary: Python client for the TNEENWH WhatsApp HTTP API — auth, OTP signup, sessions, messaging.
 Author: TNEENWH
 License: MIT
@@ -203,6 +203,14 @@ tneenwh.send_media(
 ### QR, status, webhook, inbound queues
 
 Webhook path is always **`/whatsapp/webhook`** (e.g. `https://api.tneenwh.com/whatsapp/webhook` when your HTTPS server uses this host).
+
+**Typing indicators** (shows “typing…” / “recording…” in the peer’s WhatsApp for ~25s, or clears with `stop`):
+
+```python
+tneenwh.send_chat_state("201234567890@c.us", "typing")       # default session from set_session
+tneenwh.send_chat_state("201234567890@c.us", "stop")
+tneenwh.v1_send_chat_state("session-uuid", "channel-secret-hex", to="201234567890@c.us", state="typing")
+```
 
 ```python
 tneenwh.session_status()

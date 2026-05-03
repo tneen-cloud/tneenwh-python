@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Literal, Optional
 
 from .channel import Channel, channel as _channel
 from .config import get_config
@@ -171,6 +171,24 @@ def v1_send_message(
     )
 
 
+def v1_send_chat_state(
+    session_id: str,
+    channel_secret: str,
+    *,
+    to: str,
+    state: Literal["typing", "recording", "stop"],
+) -> dict:
+    """Sub-API: typing / recording indicators (`POST /v1/sessions/.../chat-state`)."""
+    return request_json(
+        "POST",
+        f"/v1/sessions/{session_id}/chat-state",
+        body={"to": to, "state": state},
+        auth_bearer=False,
+        api_key=True,
+        channel_secret=channel_secret,
+    )
+
+
 def send_message(
     payload: Dict[str, Any],
     *,
@@ -208,6 +226,18 @@ def send_media(
     )
 
 
+def send_chat_state(
+    to: str,
+    state: Literal["typing", "recording", "stop"],
+    *,
+    session_id: Optional[str] = None,
+    channel_secret: Optional[str] = None,
+) -> dict:
+    """Show typing/recording or clear state (`POST /me/sessions/.../chat-state`)."""
+    sid, sec = _resolve_session(session_id, channel_secret)
+    return _channel(sid, sec).send_chat_state(to, state)
+
+
 def session(session_id: str, channel_secret: str) -> Channel:
     """Return a :class:`Channel` for chained calls."""
     return _channel(session_id, channel_secret)
@@ -238,6 +268,17 @@ def session_qr(
 ) -> dict:
     sid, sec = _resolve_session(session_id, channel_secret)
     return _channel(sid, sec).qr()
+
+
+def session_chat_state(
+    to: str,
+    state: Literal["typing", "recording", "stop"],
+    *,
+    session_id: Optional[str] = None,
+    channel_secret: Optional[str] = None,
+) -> dict:
+    sid, sec = _resolve_session(session_id, channel_secret)
+    return _channel(sid, sec).send_chat_state(to, state)
 
 
 def session_incoming(

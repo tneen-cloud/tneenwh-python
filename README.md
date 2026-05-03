@@ -188,6 +188,14 @@ tneenwh.send_media(
 
 Webhook path is always **`/whatsapp/webhook`** (e.g. `https://api.tneenwh.com/whatsapp/webhook` when your HTTPS server uses this host).
 
+**Typing indicators** (shows “typing…” / “recording…” in the peer’s WhatsApp for ~25s, or clears with `stop`):
+
+```python
+tneenwh.send_chat_state("201234567890@c.us", "typing")       # default session from set_session
+tneenwh.send_chat_state("201234567890@c.us", "stop")
+tneenwh.v1_send_chat_state("session-uuid", "channel-secret-hex", to="201234567890@c.us", state="typing")
+```
+
 ```python
 tneenwh.session_status()
 tneenwh.session_details()
