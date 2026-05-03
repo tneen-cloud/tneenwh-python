@@ -13,6 +13,8 @@ class Config:
     api_key: Optional[str] = None
     session_id: Optional[str] = None
     channel_secret: Optional[str] = None
+    # Set when a reverse proxy (e.g. Cloudflare) blocks Python's default User-Agent.
+    user_agent: Optional[str] = None
 
 
 _config = Config()
@@ -29,6 +31,7 @@ def configure(
     api_key: Optional[str] = None,
     session_id: Optional[str] = None,
     channel_secret: Optional[str] = None,
+    user_agent: Optional[str] = None,
 ) -> None:
     """Set one or more global options. Omitted keys are left unchanged."""
     if base_url is not None:
@@ -41,6 +44,8 @@ def configure(
         _config.session_id = session_id or None
     if channel_secret is not None:
         _config.channel_secret = channel_secret or None
+    if user_agent is not None:
+        _config.user_agent = user_agent.strip() or None
 
 
 def set_base_url(url: str) -> None:

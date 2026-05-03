@@ -1,0 +1,46 @@
+Metadata-Version: 2.4
+Name: tneenwh
+Version: 0.1.0
+Summary: Python client for the TNEENWH WhatsApp HTTP API — auth, OTP signup, sessions, messaging.
+Author: TNEENWH
+License: MIT
+Project-URL: Homepage, https://github.com/tneenwh/tneenwh
+Keywords: whatsapp,tneenwh,api,messaging
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+
+# tneenwh (Python)
+
+Python client for the **TNEENWH** WhatsApp HTTP API.
+
+## Install
+
+From the repository root:
+
+```bash
+pip install -e ./packages/tneenwh-python
+```
+
+## Minimal example
+
+```python
+import tneenwh
+
+tneenwh.configure(base_url="http://localhost:3000")
+tneenwh.login(email="you@example.com", password="your-secure-password")
+
+tneenwh.set_session("your-session-uuid", "your-channel-secret-hex")
+tneenwh.send_text("201234567890@c.us", "Hello from Python")
+```
+
+Full method list, examples, and error handling: **`docs/TNEENWH-LIBRARY-REFERENCE.md`**. Short guide: **`docs/TNEENWH-SDK.md`**.
+
+## Requirements
+
+- Python 3.9+
+- Standard library only (uses `urllib` — no `requests` dependency)

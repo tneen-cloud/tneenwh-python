@@ -32,6 +32,8 @@ def request_json(
     cfg = get_config()
     url = _url(path)
     headers: Dict[str, str] = {"Accept": "application/json"}
+    if cfg.user_agent:
+        headers["User-Agent"] = cfg.user_agent
     if extra_headers:
         headers.update(extra_headers)
     data: Optional[bytes] = None
@@ -63,14 +65,27 @@ def request_json(
             parsed = json.loads(raw) if raw else {}
         except json.JSONDecodeError:
             parsed = {"raw": raw}
-        msg = parsed.get("error") if isinstance(parsed, dict) else None
-        if not isinstance(msg, str):
-            msg = f"HTTP {e.code}"
+        msg = _json_error_message(parsed, e.code)
         raise TneenwhApiError(msg, e.code, parsed) from e
     except urllib.error.URLError as e:
         reason = getattr(e, "reason", e)
         msg = str(reason) if reason is not None else str(e)
         raise TneenwhApiError(msg, 0, {"type": "URLError", "reason": msg}) from e
+
+
+def _json_error_message(parsed: object, http_code: int) -> str:
+    if not isinstance(parsed, dict):
+        return f"HTTP {http_code}"
+    err = parsed.get("error")
+    if isinstance(err, str) and err.strip():
+        return err.strip()
+    detail = parsed.get("detail")
+    if isinstance(detail, str) and detail.strip():
+        return detail.strip()
+    title = parsed.get("title")
+    if isinstance(title, str) and title.strip():
+        return title.strip()
+    return f"HTTP {http_code}"
 
 
 def request_bytes(
@@ -86,6 +101,8 @@ def request_bytes(
     cfg = get_config()
     url = _url(path)
     headers: Dict[str, str] = {}
+    if cfg.user_agent:
+        headers["User-Agent"] = cfg.user_agent
     if extra_headers:
         headers.update(extra_headers)
     if auth_bearer:
@@ -112,9 +129,7 @@ def request_bytes(
             parsed = json.loads(raw) if raw else {}
         except json.JSONDecodeError:
             parsed = {"raw": raw}
-        msg = parsed.get("error") if isinstance(parsed, dict) else None
-        if not isinstance(msg, str):
-            msg = f"HTTP {e.code}"
+        msg = _json_error_message(parsed, e.code)
         raise TneenwhApiError(msg, e.code, parsed) from e
     except urllib.error.URLError as e:
         reason = getattr(e, "reason", e)
