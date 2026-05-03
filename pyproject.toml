@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tneenwh"
+version = "0.1.0"
+description = "Python client for the TNEENWH WhatsApp HTTP API — auth, OTP signup, sessions, messaging."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "TNEENWH" }]
+keywords = ["whatsapp", "tneenwh", "api", "messaging"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+Homepage = "https://github.com/tneenwh/tneenwh"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["tneenwh*"]
